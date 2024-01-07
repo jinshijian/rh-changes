@@ -15,15 +15,15 @@ SCRIPTNAME  	<- "2-prepdata.R"
 PROBLEM       <- FALSE
 
 # Downloaded 5 Jan 2017 from https://crudata.uea.ac.uk/cru/data/hrg/cru_ts_3.24/cruts.1609301803.v3.24/tmp/cru_ts3.24.1901.2015.tmp.dat.nc.gz
-CRU_TMP <- "~/Data/CRU/cru_ts3.24.1901.2015.tmp.dat.nc.gz"
+CRU_TMP <- "../data/bigdata/CRU/cru_ts3.24.1901.2015.tmp.dat.nc.gz"
 # Downloaded 5 Jan 2017 from https://crudata.uea.ac.uk/cru/data/hrg/cru_ts_3.24/cruts.1609301803.v3.24/pre/cru_ts3.24.1901.2015.pre.dat.nc.gz
-CRU_PRE <- "~/Data/CRU/cru_ts3.24.1901.2015.pre.dat.nc.gz"
+CRU_PRE <- "../data/bigdata/CRU/cru_ts3.24.1901.2015.pre.dat.nc.gz"
 # Downloaded 5 Jan 2017 from https://crudata.uea.ac.uk/cru/data/hrg/cru_ts_3.24/cruts.1609301803.v3.24/pet/cru_ts3.24.1901.2015.pet.dat.nc.gz
-CRU_PET <- "~/Data/CRU/cru_ts3.24.1901.2015.pet.dat.nc.gz"
+CRU_PET <- "../data/bigdata/CRU/cru_ts3.24.1901.2015.pet.dat.nc.gz"
 # Computed (see 1-cci.R) from data downloaded 6 June 2017 from http://data.ceda.ac.uk/neodc/esacci/soil_moisture/data/daily_files/COMBINED/v02.2/
-CCI_MEANS <- "~/Data/ESA-CCI/ESACCI-SOILMOISTURE-L3S-SSMV-COMBINED-fv02.2.nc_means.nc"
+CCI_MEANS <- "../data/bigdata/ESA-CCI/ESACCI-SOILMOISTURE-L3S-SSMV-COMBINED-fv02.2.nc_means.nc"
 # Computed (see 1-cci.R) from data downloaded 6 June 2017 from http://data.ceda.ac.uk/neodc/esacci/soil_moisture/data/daily_files/COMBINED/v02.2/
-CCI_STDS <- "~/Data/ESA-CCI/ESACCI-SOILMOISTURE-L3S-SSMV-COMBINED-fv02.2.nc_stds.nc"
+CCI_STDS <- "../data/bigdata/ESA-CCI/ESACCI-SOILMOISTURE-L3S-SSMV-COMBINED-fv02.2.nc_stds.nc"
 
 
 APPEND_ONLY <- FALSE
@@ -414,7 +414,7 @@ all_data[["pet"]] <- pet * 365 # mm/day to mm/yr
 
 # -------------- 4. Match with Max Planck GPP data ------------------- 
 
-fn <- "/Users/d3x290/Data/MaxPlanck/201715151429EnsembleGPP_GL.nc.gz"
+fn <- "../data/bigdata/MaxPlanck/201715151429EnsembleGPP_GL.nc.gz"
 # Downloaded 5 Jan 2017 from https://www.bgc-jena.mpg.de/geodb/tmpdnld/201715151429EnsembleGPP_GL.nc
 # See https://www.bgc-jena.mpg.de/bgi/index.php/Services/Overview
 gpp <- extract_ncdf_data(fn, srdb$Longitude, srdb$Latitude, srdb$Study_midyear, srdb$YearsOfData, baseline = NULL, trendline = NULL, file_startyear = 1982, varname = "gpp")
@@ -430,7 +430,7 @@ names(fluxnet_mtegpp) <- "gpp_mte"
 
 # This is the slow step...
 
-dir <- "/Users/d3x290/Data/MODIS_GPP/"
+dir <- "../data/bigdata/MODIS_GPP/"
 # Downloaded 6 Jan 2017 from http://www.ntsg.umt.edu/project/mod17
 modisgpp <- extract_geotiff_data(dir, "modisgpp", srdb$Longitude, srdb$Latitude, srdb$Study_midyear, srdb$YearsOfData, file_startyear = 2000)
 modisgpp <- modisgpp * 0.1 # scale factor, per README file; results in gC/m2
@@ -454,12 +454,12 @@ fluxnet %>%
 # -------------- 6. Match with SoilGrids1km data ------------------- 
 
 # Downloaded 9 Jan 2017 from ftp://ftp.soilgrids.org/data/archive/12.Apr.2014/
-dir <- "/Users/d3x290/Data/soilgrids1km/BLD/"
+dir <- "../data/bigdata/soilgrids1km/BLD/"
 bd <- extract_geotiff_data(dir, "BD", srdb$Longitude, srdb$Latitude, srdb$Study_midyear, srdb$YearsOfData, file_startyear = NULL)
-dir <- "/Users/d3x290/Data/soilgrids1km/ORCDRC/"
+dir <- "../data/bigdata/soilgrids1km/ORCDRC/"
 orc <- extract_geotiff_data(dir, "ORC", srdb$Longitude, srdb$Latitude, srdb$Study_midyear, srdb$YearsOfData, file_startyear = NULL)
 
-all_data[["soc"]] <- tibble(SOC = bd$BD * orc$ORC / 1000)  # kg C in top 1 m
+all_data[["soc"]] <- tibble(SOC = bd$BD * orc$ORC / 1000)  # kg C in top 5-15 cm
 
 
 # -------------- 7. ISIMIP GPP (Referee 1) ------------------- 

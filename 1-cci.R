@@ -13,7 +13,7 @@ PROBLEM       <- FALSE
 SKIP_EXISTING <- TRUE
 
 # Downloaded 6 June 2017 from http://data.ceda.ac.uk/neodc/esacci/soil_moisture/data/daily_files/COMBINED/v02.2/
-CCI_DATA <- "~/Data/ESA-CCI/"
+CCI_DATA <- "../data/bigdata/ESA-CCI/"
 
 # ==============================================================================
 # Main 

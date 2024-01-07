@@ -10,7 +10,7 @@ source("0-functions.R")
 SCRIPTNAME  	<- "1-fluxnet.R"
 PROBLEM       <- FALSE
 
-FLUXNET_DATA <- "~/Data/FLUXNET2015/"
+FLUXNET_DATA <- "../data/bigdata/FLUXNET2015/"
 
 # ==============================================================================
 # Main 
